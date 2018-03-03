@@ -1,0 +1,120 @@
+set nocompatible
+set backspace=indent,eol,start
+set mouse=a
+set splitright
+set splitbelow
+set list
+set listchars=tab:→\ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
+set title
+" for ctrl+s save
+nmap <c-s> :w<CR>
+imap <c-s> <Esc>:w<CR>
+
+au BufNewFile,BufRead *.py
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4 |
+    \ set textwidth=119 |
+    \ set expandtab |
+    \ set autoindent |
+    \ set fileformat=unix
+
+imap jj <Esc>
+map jjj <ESC>:
+map <silent> <C-l> ALEToggle<CR>
+
+highlight BadWhitespace ctermbg=red guibg=darkred
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+set encoding=utf-8
+
+let g:ctrlp_working_path_mode = 'r'
+
+" install vim-plug if it isnt there
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+
+call plug#begin('~/.vim/plugged')
+Plug 'airblade/vim-gitgutter'
+Plug 'tweekmonster/django-plus.vim'
+Plug 'flazz/vim-colorschemes'
+Plug 'sheerun/vim-polyglot'
+Plug 'w0rp/ale'
+Plug 'Valloric/YouCompleteMe'
+Plug 'vim-python/python-syntax'
+Plug 'vim-scripts/indentpython.vim'
+Plug 'Raimondi/delimitMate'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'idanarye/vim-merginal'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+call plug#end()
+
+filetype plugin indent on
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<c-Space>"
+let g:UltiSnipsJumpForwardTrigger="<C-j>"
+let g:UltiSnipsJumpBackwardTrigger="<C-k>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+" move among buffers with CTRL
+map <C-n> :bnext<CR>
+map <C-b> :bprev<CR>
+
+let python_highlight_all=1
+syntax on
+
+
+
+set background=dark
+colorscheme hybrid
+let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+
+set nu
+
+imap jj <Esc>
+imap jjj <Esc>:
+set clipboard=unnamed
+set colorcolumn=0
+
+autocmd BufRead *.py setlocal colorcolumn=0
+map <silent> <C-\> :NERDTreeToggle<CR>
+map <F2> :w!<CR>
+
+let g:airline_powerline_fonts = 1
+let g:airline_theme='onedark'
+
+let g:ycm_min_num_of_chars_for_completion = 1
+let g:ycm_autoclose_preview_window_after_completion=1
+let g:ycm_autoclose_preview_window_after_insertion=1
+let g:ycm_python_binary_path='python'
+
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:NERDTreeMouseMode=3
+
+let g:ycm_min_num_of_chars_for_completion = 1
+let g:ycm_autoclose_preview_window_after_completion=1
+let g:ycm_semantic_triggers =  {
+  \   'c' : ['->', '.'],
+  \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
+  \             're!\[.*\]\s'],
+  \   'ocaml' : ['.', '#'],
+  \   'cpp,objcpp' : ['->', '.', '::'],
+  \   'perl' : ['->'],
+  \   'php' : ['->', '::'],
+  \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.','from ','import '],
+  \   'ruby' : ['.', '::'],
+  \   'lua' : ['.', ':'],
+  \   'erlang' : [':'],
+  \ }
