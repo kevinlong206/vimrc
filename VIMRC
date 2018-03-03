@@ -26,8 +26,8 @@ imap mm <ESC>
 map mmm <ESC>:
 map <silent> <C-l> ALEToggle<CR>
 
-"clear highlighting on escape in normal mode
-highlight BadWhitespace ctermbg=red guibg=darkred
+
+highlight BadWhitespace ctermbg=blue guibg=blue
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 set encoding=utf-8
