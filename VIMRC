@@ -19,8 +19,8 @@ au BufNewFile,BufRead *.py
     \ set autoindent |
     \ set fileformat=unix
 
-imap jj <Esc>
-map jjj <ESC>:
+imap mm <Esc>
+map mmm <ESC>:
 map <silent> <C-l> ALEToggle<CR>
 
 highlight BadWhitespace ctermbg=red guibg=darkred
