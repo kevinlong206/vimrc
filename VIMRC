@@ -4,11 +4,16 @@ set backspace=indent,eol,start
 set mouse=a
 set splitright
 set splitbelow
-set list
-set listchars=tab:→\ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
+"set list
+"set listchars=tab:→\ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
 set title
 set ignorecase
 set smartcase
+set incsearch
+set number
+"set relativenumber
+set mouse=a
+set ttymouse=xterm2
 " for ctrl+s save
 nmap <c-s> :w<CR>
 imap <c-s> <Esc>:w<CR>
@@ -22,10 +27,9 @@ au BufNewFile,BufRead *.py
     \ set autoindent |
     \ set fileformat=unix
 
-imap mm <ESC>
-map mmm <ESC>:
-map <silent> <C-l> ALEToggle<CR>
-
+"map <c-L>:ALEToggle<CR>
+let ale_python_pylint_options='--max-line-length=120 --load-plugins pylint_django'
+let ale_python_flake8_options='--max-line-length=120 --load-plugins pylint_django'
 
 highlight BadWhitespace ctermbg=blue guibg=blue
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
@@ -44,11 +48,15 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-gitgutter'
+Plug 'edkolev/tmuxline.vim'
+Plug 'timakro/vim-searchant'
+Plug 'ervandew/supertab'
+Plug 'tpope/vim-eunuch'
 Plug 'tweekmonster/django-plus.vim'
 Plug 'flazz/vim-colorschemes'
 Plug 'sheerun/vim-polyglot'
-"Plug 'w0rp/ale'
-"Plug 'Valloric/YouCompleteMe'
+Plug 'w0rp/ale'
+Plug 'Valloric/YouCompleteMe'
 Plug 'vim-python/python-syntax'
 Plug 'vim-scripts/indentpython.vim'
 Plug 'Raimondi/delimitMate'
@@ -61,14 +69,20 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 call plug#end()
 
 filetype plugin indent on
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
 
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<c-Space>"
-let g:UltiSnipsJumpForwardTrigger="<C-j>"
-let g:UltiSnipsJumpBackwardTrigger="<C-k>"
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
@@ -85,10 +99,7 @@ set background=dark
 colorscheme hybrid
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 
-set nu
 
-imap bb <Esc>
-imap bbb <Esc>:
 set clipboard=unnamed
 set colorcolumn=0
 
@@ -97,7 +108,7 @@ map <silent> <C-\> :NERDTreeToggle<CR>
 map <F2> :w!<CR>
 
 let g:airline_powerline_fonts = 1
-let g:airline_theme='onedark'
+let g:airline_theme='hybrid'
 
 let g:ycm_min_num_of_chars_for_completion = 1
 let g:ycm_autoclose_preview_window_after_completion=1
@@ -106,7 +117,10 @@ let g:ycm_python_binary_path='python'
 
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 let g:NERDTreeMouseMode=3
+let NERDTreeShowHidden=1
 
+
+let g:ycm_auto_trigger = 0
 let g:ycm_min_num_of_chars_for_completion = 1
 let g:ycm_autoclose_preview_window_after_completion=1
 let g:ycm_semantic_triggers =  {
@@ -122,11 +136,3 @@ let g:ycm_semantic_triggers =  {
   \   'lua' : ['.', ':'],
   \   'erlang' : [':'],
   \ }
-noremap  <Up> ""
-noremap! <Up> <Esc>
-noremap  <Down> ""
-noremap! <Down> <Esc>
-noremap  <Left> ""
-noremap! <Left> <Esc>
-noremap  <Right> ""
-noremap! <Right> <Esc>
